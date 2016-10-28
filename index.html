@@ -3,103 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Converter</title>
-
-		<script>
-		var columns = ["en", "de", "fr", "it"];
-
-			function convert() {
-
-				var input = document.getElementById('input').value,
-				input = input.split("\n"),
-				rows = [],
-				data = {};
-
-				for (var i = 0; i < input.length; i++) rows.push(input[i].split("	"));
-
-				// Adding the first row of the data as the columns
-				columns = rows[0].splice(1);
-
-				for (var i = 0; i < columns.length; i++) {
-					data[columns[i]] = "{";
-
-					for (var ii = 1; ii < rows.length; ii++) {
-						if (rows[ii].length - 1 != columns.length) {
-							if (rows[ii].length <= 1) {
-								rows.splice(ii, 1);
-								ii -= 1;
-							} else return "error";
-						}
-
-						if (!rows[ii]) return "error";
-
-						rows[ii][i + 1] = rows[ii][i + 1].split('"').join('\\"');
-
-						if (ii < rows.length - 1) data[columns[i]] += '"' + [rows[ii][0]] + '":"' + rows[ii][i + 1] + '",';
-					}
-
-					data[columns[i]] = data[columns[i]].substring(0, data[columns[i]].length - 1);
-					data[columns[i]] += "}";
-				}
-
-				return data;
-			}
-
-			function prep_download(data) {
-				if (data == "error") {
-					alert("Data is messed up.");
-					return;
-				}
-
-				var download_box = document.getElementById('downloads');
-
-				download_box.innerHTML = "";
-
-				for (var i = 0; i < columns.length; i++) {
-					var download_link = document.createElement("a");
-					download_link.innerHTML = "download " + columns[i];
-					download_link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(data[columns[i]]);
-					download_link.download = columns[i] + ".json";
-					download_box.appendChild(download_link);
-				}
-
-			}
-
-			function convert_and_download() {
-				s = performance.now();
-				prep_download(convert());
-				e = performance.now();
-				document.getElementById('speed').innerHTML = "Done in:" + (e-s).toFixed(2) + " miliseconds";
-			}
-
-		</script>
-
-		<style>
-
-			body {
-				font-family: sans-serif;
-			}
-
-			textarea {
-				width: 100%;
-				height: 50vh;
-			}
-
-			a, button {
-				display: inline-block;
-				padding: 0.5em;
-				font-weight: bold;
-				border: 1px solid #000;
-				margin: 0.5em 0.5em 0 0;
-				color: #000;
-				text-decoration: none;
-				text-transform: uppercase;
-				background-color: white;
-				cursor: pointer;
-				font-size: 1em;
-				outline: none;
-			}
-
-		</style>
+		<script src="script.js"></script>
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
 		<h2>Excel to flat JSON files converter.</h2>
@@ -107,9 +12,9 @@
 		<p>The first column will be used as the key and every other column will be a file.</p>
 		<textarea id="input"></textarea>
 		<button onclick="convert_and_download()">Convert and download</button>
-		<!-- <br><br> -->
 		<span id="speed"></span>
 		<br><br>
 		<div id="downloads"></div>
+		<div id="error"></div>
 	</body>
 </html>

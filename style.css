@@ -1,0 +1,55 @@
+body
+{
+	font-family: sans-serif;
+}
+
+textarea
+{
+	width: 100%;
+	height: 50vh;
+}
+
+a, button
+{
+	display: inline-block;
+	padding: 0.5em;
+	font-weight: bold;
+	border: 1px solid #000;
+	margin: 0.5em 0.5em 0 0;
+	color: #000;
+	text-decoration: none;
+	text-transform: uppercase;
+	background-color: white;
+	cursor: pointer;
+	font-size: 1em;
+	outline: none;
+}
+
+#error span
+{
+	background-color: #F44336;
+	color: #fff;
+	padding: 1em;
+}
+
+.animate
+{
+	animation: load_in 0.75s ease;
+	animation-play-state: paused;
+}
+
+@keyframes load_in
+{
+	0% {
+		opacity: 0;
+		transform:scale(0);
+	}
+	60% {
+		opacity: 1;
+		transform:scale(1.05);
+	}
+	100% {
+		opacity: 1;
+		transform:scale(1);
+	}
+}
