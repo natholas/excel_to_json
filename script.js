@@ -20,6 +20,8 @@ var columns = [];
 			rows.push(input[i].split("	"));
 		}
 
+		if (rows.length < 2) return "Error: You need more than one row";
+
 		// Adding the first row of the data as the columns
 		columns = rows[0].splice(1);
 
@@ -44,8 +46,8 @@ var columns = [];
 
 			}
 
-			if (data[columns[i]].length <= 1) return "Error: You need more than one row";
-			
+			if (data[columns[i]].length <= 1) continue;
+
 			data[columns[i]] = data[columns[i]].substring(0, data[columns[i]].length - 1);
 			data[columns[i]] = data[columns[i]].split('"\\"').join('"');
 			data[columns[i]] = data[columns[i]].split('\\""').join('"');
